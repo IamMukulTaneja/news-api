@@ -24,7 +24,7 @@ public class UserController {
 	@Autowired
 	private UserService userservice;
 	
-	@CrossOrigin(origins = "https://dry-journey-57345.herokuapp.com")
+	@CrossOrigin(origins = "http://127.0.0.1:36655")
 	@RequestMapping(method=RequestMethod.POST, value="/news")
 	public Output postNews(@RequestBody PostObject postobject) throws Exception {
 		
