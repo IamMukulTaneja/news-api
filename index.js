@@ -8,7 +8,7 @@ function getNews() {
     var categoryval = categorydrop.options[categorydrop.selectedIndex].value;
     
     var keywordval = document.getElementById("keyword").value;
-    var url = "http://localhost:8080/news";
+    var url = "https://dry-journey-57345.herokuapp.com/news";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
