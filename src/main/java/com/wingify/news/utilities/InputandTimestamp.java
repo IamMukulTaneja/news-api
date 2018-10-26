@@ -2,6 +2,8 @@ package com.wingify.news.utilities;
 
 import com.wingify.news.input.Input;
 
+
+// Utility for the hashmap
 public class InputandTimestamp {
 	
 	Input input;

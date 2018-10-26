@@ -20,11 +20,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+// Service class is acting as an utility class which contains different functions.
 @Service
 public class UserService {
 
 	HashMap<String, InputandTimestamp> isPresent = new HashMap<>();
 
+	// made url string using baseURL and some conditions 
 	public String buildUrl(String country, String category) {
 		
 		
@@ -42,26 +45,11 @@ public class UserService {
 		String leftpart  = baseURL.substring(0,index+1);
 		String rightpart = baseURL.substring(index+1);
 		
-		if(country!=null && category!=null)
-		{
-			return (leftpart + "category="+category+"&"+"country="+country+"&"+rightpart);
-		}
-		else if(country==null && category!=null)
-		{
-			return (leftpart + "category="+category+"&"+rightpart);
-		}
-		else if(country!=null && category==null)
-		{
-			return (leftpart + "country="+country+"&"+rightpart);
-		}
-		else
-		{
-			return (leftpart + "category="+category+"&"+"country="+country+"&"+rightpart);
-		}
-		
+		return (leftpart + "category="+category+"&"+"country="+country+"&"+rightpart);
 		
 	}
 	
+	// Used OKhttpclient to hit the newsapi url and fetch the json response.
 	public  String getJsonResponse(String url) throws Exception {
         OkHttpClient okhttpclient = new OkHttpClient();
         Request.Builder requestbuilder = new Request.Builder();
@@ -79,6 +67,7 @@ public class UserService {
         }
     }
     
+	// Convert the json object into the input class's object and return it.
 	public Input getInputObject(PostObject postobject) throws Exception {
 		
 		String country = postobject.getCountry();
@@ -95,23 +84,12 @@ public class UserService {
 			else
 			{
 				String url  = buildUrl(country, category);
-				if(url!=null)
-				{
 					String jsonResponse = getJsonResponse(url);
 					Gson g = new Gson();
 					Input inputObject = g.fromJson(jsonResponse, Input.class);
 					isPresent.put(key,new InputandTimestamp(inputObject,presentTime));
 					return inputObject;
-				}
-				else
-				{
-					
-					String jsonResponse = getJsonResponse(url);
-					Gson g = new Gson();
-					Input inputObject = g.fromJson(jsonResponse, Input.class);
-					isPresent.put(key,new InputandTimestamp(inputObject,presentTime));
-					return inputObject;
-				}
+				
 				
 			}
 			
@@ -119,28 +97,18 @@ public class UserService {
 		else
 		{
 			String url  = buildUrl(country, category);
-			if(url!=null)
-			{
 				String jsonResponse = getJsonResponse(url);
 				Gson g = new Gson();
 				Input inputObject = g.fromJson(jsonResponse, Input.class);
 				isPresent.put(key,new InputandTimestamp(inputObject,presentTime));
 				return inputObject;
-			}
-			else
-			{
-				String jsonResponse = getJsonResponse(url);
-				Gson g = new Gson();
-				Input inputObject = g.fromJson(jsonResponse, Input.class);
-				isPresent.put(key,new InputandTimestamp(inputObject,presentTime));
-				return inputObject;
-			}
 			
 		}
 		
 		
 	}
-
+    
+	// filter the input object to convert it to deired output object and return it
 	public Output getOutput(Input input,PostObject postobject) {
 		
 		String country = postobject.getCountry();
@@ -188,7 +156,8 @@ public class UserService {
 		
 		
 	}
-
+    
+	// checks if the keyword is present in the article.
 	private boolean isKeywordPresent(Article article, String keyword) {
 		
 		String title = article.getTitle();
