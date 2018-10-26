@@ -12,7 +12,7 @@ function getNews() {
     var categoryval = categorydrop.options[categorydrop.selectedIndex].value;
     
     var keywordval = document.getElementById("keyword").value;
-    var url = "https://shrouded-atoll-38442.herokuapp.com/news";
+    var url = "https://filterednews.herokuapp.com/news";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
